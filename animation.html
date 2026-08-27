@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zak Lab | منصة المختبرات الطبية</title>
+    <!-- خط عربي احترافي + خط سينمائي لاسم المنصة -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Cinzel:wght@600;700;900&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            /* نفس الألوان الأساسية بدون أي تغيير في الهوية */
+            --primary-blue: #0284c7;
+            --primary-dark: #0369a1;
+            --medical-teal: #0d9488;
+            --bg-light: #f8fafc;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            /* درجات مشتقة من نفس الألوان لإضافة عمق بصري فقط */
+            --glow-blue: rgba(2, 132, 199, 0.35);
+            --glow-teal: rgba(13, 148, 136, 0.25);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Cairo', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        html, body {
+            height: 100%;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            background-image:
+                radial-gradient(at 0% 0%, rgba(2, 132, 199, 0.10) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(13, 148, 136, 0.10) 0px, transparent 50%),
+                radial-gradient(at 50% 50%, rgba(255, 255, 255, 1) 0px, transparent 100%);
+            color: var(--text-main);
+            height: 100vh;
+            height: 100svh;
+            min-height: 100vh;
+            min-height: 100svh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+        }
+
+        body.is-backgrounded .ambient-glow,
+        body.is-backgrounded .microscope-svg,
+        body.is-backgrounded .indicator-pulse .dot,
+        body.is-backgrounded .header-section {
+            animation-play-state: paused;
+        }
+
+        /* شبكة الخلفية الطبية */
+        .medical-grid-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: 40px 40px;
+            background-image:
+                linear-gradient(to right, rgba(2, 132, 199, 0.035) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(2, 132, 199, 0.035) 1px, transparent 1px);
+            z-index: 1;
+            pointer-events: none;
+            mask-image: radial-gradient(circle at 50% 45%, black 0%, transparent 75%);
+        }
+
+        /* هالة ضوئية هادئة خلف المجهر لإضافة عمق دون أي أسهم أو خطوط توصيل */
+        .ambient-glow {
+            position: absolute;
+            top: 38%;
+            left: 50%;
+            width: 460px;
+            height: 460px;
+            transform: translate(-50%, -50%);
+            background: radial-gradient(circle, var(--glow-blue) 0%, var(--glow-teal) 45%, transparent 72%);
+            filter: blur(10px);
+            opacity: 0.55;
+            z-index: 1;
+            pointer-events: none;
+            animation: glowPulse 5s ease-in-out infinite;
+        }
+
+        /* الهيدر والعناوين */
+        .header-section {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            padding-top: 40px;
+            animation: fadeInDown 1s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .lab-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(2, 132, 199, 0.08);
+            color: var(--primary-blue);
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            border: 1px solid rgba(2, 132, 199, 0.2);
+            backdrop-filter: blur(8px);
+            margin-bottom: 14px;
+        }
+
+        .header-section h1 {
+            font-size: 3rem;
+            font-weight: 900;
+            color: var(--text-main);
+            letter-spacing: -0.5px;
+            line-height: 1.25;
+            direction: rtl;
+            text-align: center;
+            text-wrap: balance;
+        }
+
+        /* اسم المنصة بخط سينمائي مميز مع توهج ناعم بنفس ألوان الهوية */
+        .header-section h1 .brand-name {
+            font-family: 'Cinzel', 'Cairo', serif;
+            font-weight: 700;
+            letter-spacing: 2px;
+            background: linear-gradient(135deg, var(--primary-blue), var(--medical-teal));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 24px var(--glow-blue);
+            padding: 0 4px;
+            direction: ltr;
+            display: inline-block;
+            white-space: nowrap;
+        }
+
+        .header-section p {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            margin-top: 10px;
+            font-weight: 600;
+        }
+
+        /* حاوية المجهر الاحترافي */
+        .microscope-wrapper {
+            position: relative;
+            z-index: 10;
+            width: 100%;
+            max-width: 500px;
+            height: 40vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .microscope-svg {
+            width: 100%;
+            height: 100%;
+            filter: drop-shadow(0 22px 26px rgba(2, 132, 199, 0.18));
+            animation: floatMicroscope 4s ease-in-out infinite;
+            transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), filter 0.35s ease;
+        }
+
+        .microscope-wrapper:hover .microscope-svg {
+            transform: scale(1.035);
+            filter: drop-shadow(0 26px 32px rgba(2, 132, 199, 0.26));
+        }
+
+        /* المنطقة السفلية والزر التفاعلي */
+        .action-container {
+            position: relative;
+            z-index: 10;
+            margin-bottom: 45px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 18px;
+        }
+
+        .indicator-pulse {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--primary-blue);
+            font-weight: 700;
+            font-size: 0.95rem;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 6px 18px;
+            border-radius: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+        }
+
+        .indicator-pulse .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-blue), var(--medical-teal));
+            animation: dotPulse 1.8s ease-in-out infinite;
+        }
+
+        .click-enter-btn {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-dark) 100%);
+            color: #ffffff;
+            padding: 16px 42px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            border: none;
+            border-radius: 50px;
+            box-shadow: 0 12px 30px rgba(2, 132, 199, 0.3);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .click-enter-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: 0.5s;
+        }
+
+        .click-enter-btn:hover::before {
+            left: 100%;
+        }
+
+        .click-enter-btn:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 18px 35px rgba(2, 132, 199, 0.45);
+        }
+
+        .click-enter-btn.btn-portal-active {
+            transform: scale(0.94);
+            box-shadow: 0 0 45px var(--glow-blue), 0 0 70px var(--glow-teal);
+        }
+
+        /* الصفحة تخفت بهدوء خلف الموقع الجديد وهو يتكشف */
+        body.page-fading {
+            transition: opacity 0.6s ease 0.25s;
+            opacity: 0;
+        }
+
+        /* هنا يكمن التأثير: نفس موقعك (index.html) محمّل مسبقاً وخفي خلف دائرة صغيرة عند الزر،
+           وعند الضغط تتوسع "نافذة الكشف" هذه تدريجياً حتى يظهر الموقع الحقيقي بالكامل بدل أي شاشة انتقالية */
+        .reveal-frame {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            border: none;
+            z-index: 999;
+            pointer-events: none;
+            clip-path: circle(0px at 50% 50%);
+            -webkit-clip-path: circle(0px at 50% 50%);
+        }
+
+        .reveal-frame.revealing {
+            transition: clip-path 1.1s cubic-bezier(0.65, 0, 0.35, 1);
+            -webkit-transition: -webkit-clip-path 1.1s cubic-bezier(0.65, 0, 0.35, 1);
+            pointer-events: auto;
+        }
+
+        /* هالة ضوئية خفيفة تحيط بحافة دائرة الكشف أثناء توسعها لإحساس أكثر حيوية */
+        .reveal-ring {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 0 2px rgba(255,255,255,0.55), 0 0 50px 14px var(--glow-blue);
+            z-index: 1000;
+            pointer-events: none;
+            opacity: 0;
+        }
+
+        .reveal-ring.revealing {
+            transition: width 1.1s cubic-bezier(0.65, 0, 0.35, 1), height 1.1s cubic-bezier(0.65, 0, 0.35, 1), opacity 0.3s ease;
+            opacity: 1;
+        }
+
+        /* الأنيميشن والحركات */
+        @keyframes floatMicroscope {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-12px); }
+        }
+
+        @keyframes glowPulse {
+            0%, 100% { opacity: 0.45; transform: translate(-50%, -50%) scale(1); }
+            50% { opacity: 0.65; transform: translate(-50%, -50%) scale(1.06); }
+        }
+
+        @keyframes dotPulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(1.4); }
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    
+        /* احترام إعداد المستخدم الذي يفضّل تقليل الحركة. */
+        @media (prefers-reduced-motion: reduce) {
+            .ambient-glow,
+            .microscope-svg,
+            .indicator-pulse .dot,
+            .header-section {
+                animation: none;
+            }
+
+            .reveal-frame,
+            .reveal-ring {
+                display: none;
+            }
+        }
+
+        /* V22 Audit: واجهة الدخول تبقى كاملة في الهاتف القصير أو بالوضع
+           الأفقي من دون تغيير لونها أو منطق انتقالها الدائري. */
+        @media (max-width: 560px) {
+            html,
+            body {
+                width: 100%;
+                max-width: 100%;
+                overflow-x: clip;
+            }
+
+            .header-section {
+                width: 100%;
+                max-width: 100%;
+                padding: max(18px, env(safe-area-inset-top)) 16px 0;
+            }
+
+            .lab-badge {
+                margin-bottom: 9px;
+                padding: 6px 14px;
+                font-size: 0.78rem;
+            }
+
+            .header-section h1 {
+                max-width: calc(100vw - 40px);
+                margin-inline: auto;
+                font-size: clamp(1.55rem, 7.3vw, 2.12rem);
+                line-height: 1.32;
+                overflow-wrap: break-word;
+            }
+
+            .header-section p {
+                max-width: 290px;
+                margin-inline: auto;
+                font-size: 0.88rem;
+                line-height: 1.65;
+            }
+
+            .microscope-wrapper {
+                width: min(92vw, 330px);
+                height: min(36svh, 290px);
+            }
+
+            .action-container {
+                width: 100%;
+                max-width: 100%;
+                margin-bottom: max(18px, env(safe-area-inset-bottom));
+                gap: 11px;
+            }
+
+            .indicator-pulse {
+                max-width: calc(100vw - 28px);
+                padding: 6px 12px;
+                font-size: 0.78rem;
+                text-align: center;
+            }
+
+            .click-enter-btn {
+                max-width: calc(100vw - 32px);
+                min-width: 0;
+                padding: 13px 24px;
+                font-size: 1rem;
+                justify-content: center;
+                text-align: center;
+                white-space: normal;
+            }
+        }
+
+        @media (max-height: 620px) and (orientation: landscape) {
+            .header-section { padding-top: 13px; }
+            .lab-badge { display: none; }
+            .header-section h1 { font-size: clamp(1.5rem, 4vw, 2rem); }
+            .header-section p { margin-top: 4px; font-size: 0.82rem; }
+            .microscope-wrapper { height: 42svh; max-width: 320px; }
+            .action-container { margin-bottom: 12px; gap: 8px; }
+            .indicator-pulse { padding: 4px 12px; font-size: 0.74rem; }
+            .click-enter-btn { padding: 10px 22px; font-size: 0.95rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- شبكة خلفية طبية -->
+    <div class="medical-grid-bg" aria-hidden="true"></div>
+    <!-- هالة ضوئية بديلة عن خط الكيبل/السهم -->
+    <div class="ambient-glow" aria-hidden="true"></div>
+
+    <!-- الهيدر والترحيب -->
+    <div class="header-section">
+        <div class="lab-badge">
+            🔬 المنصة المختبرية الرقمية
+        </div>
+        <h1>أهلاً بكم في منصة <span class="brand-name">Zak Lab</span></h1>
+        <p>المرجع الطبي الحديث للأجهزة، التحاليل، ودليل تيوبات المختبرية</p>
+    </div>
+
+    <!-- مجسم المجهر الإلكتروني عالي الدقة (SVG HD Vector) — للعرض فقط، بدون تنقل عند الضغط -->
+    <div class="microscope-wrapper" id="microscope-anchor">
+        <svg class="microscope-svg" aria-hidden="true" viewBox="0 0 300 350" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <linearGradient id="body-metal" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#1e293b"/>
+                    <stop offset="55%" stop-color="#0f172a"/>
+                    <stop offset="100%" stop-color="#020617"/>
+                </linearGradient>
+                <linearGradient id="body-highlight" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" stop-color="#f1f5f9"/>
+                    <stop offset="100%" stop-color="#cbd5e1"/>
+                </linearGradient>
+                <linearGradient id="base-metal" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" stop-color="#334155"/>
+                    <stop offset="100%" stop-color="#0f172a"/>
+                </linearGradient>
+                <linearGradient id="laser-glow" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.95"/>
+                    <stop offset="100%" stop-color="#0d9488" stop-opacity="0.15"/>
+                </linearGradient>
+                <radialGradient id="lens-shine" cx="35%" cy="30%" r="70%">
+                    <stop offset="0%" stop-color="#7dd3fc" stop-opacity="0.9"/>
+                    <stop offset="60%" stop-color="#0284c7" stop-opacity="0.5"/>
+                    <stop offset="100%" stop-color="#0369a1" stop-opacity="0.15"/>
+                </radialGradient>
+                <radialGradient id="knob-shine" cx="35%" cy="30%" r="70%">
+                    <stop offset="0%" stop-color="#7dd3fc"/>
+                    <stop offset="100%" stop-color="#0284c7"/>
+                </radialGradient>
+            </defs>
+
+            <!-- ظل ناعم أسفل المجهر -->
+            <ellipse cx="150" cy="326" rx="95" ry="10" fill="#0284c7" opacity="0.12"/>
+
+            <!-- القاعدة الأساسية -->
+            <rect x="65" y="298" width="170" height="22" rx="11" fill="url(#base-metal)"/>
+            <rect x="82" y="288" width="136" height="13" rx="5" fill="#475569"/>
+            <circle cx="192" cy="294.5" r="4.2" fill="#38bdf8"/>
+            <circle cx="192" cy="294.5" r="4.2" fill="none" stroke="#7dd3fc" stroke-width="1" opacity="0.6"/>
+
+            <!-- العمود والذراع الرئيسي -->
+            <path d="M180 288 L180 118 C180 78, 138 68, 108 88 L108 108" stroke="url(#body-metal)" stroke-width="25" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M180 288 L180 118 C180 78, 138 68, 108 88 L108 108" stroke="url(#body-highlight)" stroke-width="15" stroke-linecap="round" stroke-linejoin="round"/>
+
+            <!-- مسرح الفحص -->
+            <rect x="78" y="208" width="94" height="11" rx="3.5" fill="#1e293b"/>
+            <rect x="78" y="208" width="94" height="4" rx="2" fill="#334155"/>
+            <rect x="108" y="219" width="32" height="16" rx="2" fill="#475569"/>
+            <rect x="113" y="222" width="22" height="3" rx="1.5" fill="#94a3b8" opacity="0.7"/>
+
+            <!-- مفتاح الضبط والتركيز -->
+            <circle cx="180" cy="209" r="15" fill="#334155"/>
+            <circle cx="180" cy="209" r="15" fill="none" stroke="#0f172a" stroke-width="1.5"/>
+            <circle cx="180" cy="209" r="8.5" fill="url(#knob-shine)"/>
+
+            <!-- العدسة الشيئية والرأس -->
+            <rect x="93" y="98" width="42" height="52" rx="7" fill="url(#body-metal)"/>
+            <rect x="97" y="102" width="10" height="44" rx="4" fill="#334155" opacity="0.7"/>
+            <polygon points="99,150 129,150 124,186 104,186" fill="#334155"/>
+            <polygon points="99,150 129,150 124,186 104,186" fill="url(#lens-shine)" opacity="0.35"/>
+            <!-- ضوء ليزر الفحص -->
+            <polygon points="107,186 121,186 133,210 95,210" fill="url(#laser-glow)" opacity="0.85"/>
+            <ellipse cx="114" cy="188" rx="10" ry="3" fill="#7dd3fc" opacity="0.6"/>
+
+            <!-- تيوبات والعدسات العينية -->
+            <path d="M115 98 L94 48" stroke="url(#body-metal)" stroke-width="13" stroke-linecap="round"/>
+            <path d="M115 98 L94 48" stroke="url(#body-highlight)" stroke-width="6.5" stroke-linecap="round"/>
+            <rect x="83" y="38" width="22" height="13" rx="4" fill="#0f172a"/>
+            <circle cx="94" cy="44.5" r="4.5" fill="url(#lens-shine)"/>
+        </svg>
+    </div>
+
+    <!-- الزر والتأشير -->
+    <div class="action-container" id="button-anchor">
+        <div class="indicator-pulse">
+            <span class="dot"></span> اضغط على الزر للدخول إلى المنصة
+        </div>
+        <button type="button" class="click-enter-btn" id="enter-lab-btn" aria-label="دخول منصة Zak Lab">
+            <span>دخول منصة Zak Lab</span>
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+        </button>
+    </div>
+
+    <!-- موقعك الحقيقي محمّل هنا مسبقاً وخفي، ويتكشف تدريجياً من نقطة الزر (تأثير ترند) -->
+    <iframe id="reveal-frame" class="reveal-frame" src="index.html?v=22-5-final-release" title="Zak Lab"></iframe>
+    <div id="reveal-ring" class="reveal-ring"></div>
+
+    <script>
+        // الآن فقط الضغط على الزر هو ما يفتح المنصة — الضغط على المجهر لا ينقل الصفحة إطلاقاً
+        const enterBtn = document.getElementById('enter-lab-btn');
+        const revealFrame = document.getElementById('reveal-frame');
+        const revealRing = document.getElementById('reveal-ring');
+        let isEntering = false;
+        const revealDuration = 1150; // يجب أن يطابق مدة CSS الخاصة بتوسّع الدائرة.
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+        document.addEventListener('visibilitychange', () => {
+            document.body.classList.toggle('is-backgrounded', document.hidden);
+        });
+
+        function startCircleReveal(e) {
+            if (e) e.preventDefault();
+            if (isEntering) return;
+            if (prefersReducedMotion.matches) {
+                window.location.assign('index.html?v=22-5-final-release');
+                return;
+            }
+            isEntering = true;
+            enterBtn.disabled = true;
+
+            // المرحلة 1: ضغطة الزر
+            enterBtn.classList.add('btn-portal-active');
+
+            // المرحلة 2: نحسب مكان الزر بالضبط لتبدأ نافذة الكشف من هناك
+            const btnRect = enterBtn.getBoundingClientRect();
+            const originX = btnRect.left + btnRect.width / 2;
+            const originY = btnRect.top + btnRect.height / 2;
+
+            // نحسب أبعد نقطة من الشاشة لضمان تغطية كاملة عند التوسع
+            const maxX = Math.max(originX, window.innerWidth - originX);
+            const maxY = Math.max(originY, window.innerHeight - originY);
+            const finalRadius = Math.hypot(maxX, maxY) + 40;
+
+            // نضبط نقطة انطلاق الدائرة (نفس مكان الزر) قبل بدء الحركة
+            revealFrame.style.clipPath = `circle(0px at ${originX}px ${originY}px)`;
+            revealFrame.style.webkitClipPath = `circle(0px at ${originX}px ${originY}px)`;
+            revealRing.style.left = originX + 'px';
+            revealRing.style.top = originY + 'px';
+
+            // المرحلة 3: بعد فريمين لضمان تطبيق نقطة البداية، نشغّل التوسع الفعلي
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    revealFrame.classList.add('revealing');
+                    revealRing.classList.add('revealing');
+
+                    revealFrame.style.clipPath = `circle(${finalRadius}px at ${originX}px ${originY}px)`;
+                    revealFrame.style.webkitClipPath = `circle(${finalRadius}px at ${originX}px ${originY}px)`;
+                    revealRing.style.width = (finalRadius * 2) + 'px';
+                    revealRing.style.height = (finalRadius * 2) + 'px';
+
+                    document.body.classList.add('page-fading');
+                });
+            });
+
+            // المرحلة 4: بعد اكتمال الكشف بالكامل، نستقر فعلياً على رابط الموقع (بدون أي وميض لأن المحتوى نفسه ظاهر مسبقاً)
+            setTimeout(() => {
+                window.location.href = 'index.html?v=22-5-final-release';
+            }, revealDuration);
+        }
+
+        enterBtn.addEventListener('click', startCircleReveal);
+    </script>
+</body>
+</html>
