@@ -511,7 +511,7 @@
     </div>
 
     <!-- موقعك الحقيقي محمّل هنا مسبقاً وخفي، ويتكشف تدريجياً من نقطة الزر (تأثير ترند) -->
-    <iframe id="reveal-frame" class="reveal-frame" src="index.html?v=22-5-final-release" title="Zak Lab"></iframe>
+    <iframe id="reveal-frame" class="reveal-frame" src="index.html?fromAnimation=1&v=22-5-final-release" title="Zak Lab"></iframe>
     <div id="reveal-ring" class="reveal-ring"></div>
 
     <script>
@@ -531,7 +531,7 @@
             if (e) e.preventDefault();
             if (isEntering) return;
             if (prefersReducedMotion.matches) {
-                window.location.assign('index.html?v=22-5-final-release');
+                window.location.assign('index.html?fromAnimation=1&v=22-5-final-release');
                 return;
             }
             isEntering = true;
@@ -573,7 +573,7 @@
 
             // المرحلة 4: بعد اكتمال الكشف بالكامل، نستقر فعلياً على رابط الموقع (بدون أي وميض لأن المحتوى نفسه ظاهر مسبقاً)
             setTimeout(() => {
-                window.location.href = 'index.html?v=22-5-final-release';
+                window.location.href = 'index.html?fromAnimation=1&v=22-5-final-release';
             }, revealDuration);
         }
 

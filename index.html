@@ -17,6 +17,18 @@
     <meta name="description" content="Zak Lab منصة عربية تعليمية لطلاب وممارسي التحليلات المرضية: تيوبات، أجهزة، تحاليل، أحياء دقيقة، تفسير نتائج، أحياء جزيئية ووراثة.">
     <meta name="theme-color" content="#0284c7">
 
+    <!-- صفحة الدخول هي البداية عند فتح رابط المشروع، أما هذه العلامة فتسمح بالوصول من animation.html فقط. -->
+    <script>
+        (function () {
+            const currentUrl = new URL(window.location.href);
+            if (currentUrl.searchParams.get('fromAnimation') === '1') return;
+
+            const entryUrl = new URL('animation.html', currentUrl);
+            entryUrl.search = currentUrl.search;
+            window.location.replace(entryUrl.href);
+        })();
+    </script>
+
 
     <!-- ========================================================= -->
     <!-- الخط العربي -->
