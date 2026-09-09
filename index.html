@@ -4,33 +4,25 @@
 <!doctype html>
 <html lang="ar" dir="rtl" data-theme="light">
 
-
 <head>
-
 
     <!-- تحديد ترميز الصفحة حتى تظهر اللغة العربية بشكل صحيح -->
     <meta charset="UTF-8">
 
-
     <!-- جعل الموقع متجاوباً مع شاشات الهاتف والتابلت والكمبيوتر -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-
     <!-- عنوان الصفحة الذي يظهر في تبويب المتصفح -->
     <title>Zak Lab | المنصة الرئيسية</title>
-
 
     <!-- وصف مختصر لمحركات البحث والمشاركة، من دون تغيير محتوى أو هوية الموقع -->
     <meta name="description" content="Zak Lab منصة عربية تعليمية لطلاب وممارسي التحليلات المرضية: تيوبات، أجهزة، تحاليل، أحياء دقيقة، تفسير نتائج، أحياء جزيئية ووراثة.">
     <meta name="theme-color" content="#0284c7">
 
 
-
-
     <!-- ========================================================= -->
     <!-- الخط العربي -->
     <!-- ========================================================= -->
-
 
     <!-- استدعاء خط Cairo من Google Fonts -->
     <link
@@ -39,26 +31,19 @@
     >
 
 
-
-
     <!-- ========================================================= -->
     <!-- ملف CSS الرئيسي -->
     <!-- ========================================================= -->
 
-
     <!-- ربط ملف التنسيقات الخارجي -->
     <link rel="stylesheet" href="new.css?v=dark-v29">
-
-
 
 
     <!-- ========================================================= -->
     <!-- تنسيقات قسم المطور وأزرار التواصل الاجتماعي -->
     <!-- ========================================================= -->
 
-
     <style>
-
 
         /* الحاوية الرئيسية لقسم المطور */
         .dev-profile-container {
@@ -69,12 +54,9 @@
         }
 
 
-
-
         /* --------------------------------------------------------- */
         /* كارت معلومات المطور الرئيسي */
         /* --------------------------------------------------------- */
-
 
         .dev-header-card {
             background: var(--bg-card, #ffffff);
@@ -82,8 +64,1449 @@
             border-radius: 20px;
             padding: 30px;
 
-
             /* ترتيب الصورة والمعلومات بجانب بعض */
             display: flex;
             align-items: center;
 
+            gap: 25px;
+
+            box-shadow: var(
+                --shadow-sm,
+                0 2px 5px rgba(0, 0, 0, 0.05)
+            );
+
+            /* خط أزرق على الجهة اليمنى من الكارت */
+            border-right: 6px solid var(
+                --primary-blue,
+                #0284c7
+            );
+        }
+
+
+        /* --------------------------------------------------------- */
+        /* الحاوية الدائرية لصورة المطور */
+        /* --------------------------------------------------------- */
+
+        .dev-avatar {
+            width: 120px;
+            height: 120px;
+
+            /* جعل الحاوية دائرية */
+            border-radius: 50%;
+
+            /* إخفاء أي جزء من الصورة يخرج من الدائرة */
+            overflow: hidden;
+
+            border: 3px solid transparent;
+
+            /* إنشاء إطار متدرج حول الصورة */
+            background:
+                linear-gradient(
+                    var(--bg-card, #fff),
+                    var(--bg-card, #fff)
+                ) padding-box,
+                linear-gradient(
+                    135deg,
+                    var(--primary-blue, #0284c7),
+                    var(--medical-teal, #0d9488)
+                ) border-box;
+
+            box-shadow:
+                0 8px 20px rgba(2, 132, 199, 0.2);
+
+            /* منع الصورة من الانكماش */
+            flex-shrink: 0;
+
+            /* الحركة عند استخدام الماوس */
+            transition:
+                transform 0.3s ease,
+                box-shadow 0.3s ease;
+
+            cursor: pointer;
+        }
+
+
+        /* --------------------------------------------------------- */
+        /* الصورة الموجودة داخل dev-avatar */
+        /* --------------------------------------------------------- */
+
+        .dev-avatar img {
+            width: 100%;
+            height: 100%;
+
+            /* جعل الصورة تغطي كامل الدائرة */
+            object-fit: cover;
+
+            /* وضع الصورة من المنتصف */
+            object-position: center;
+
+            display: block;
+
+            /* حركة الصورة عند تمرير الماوس */
+            transition: transform 0.3s ease;
+        }
+
+
+        /* --------------------------------------------------------- */
+        /* تأثير الصورة عند تمرير الماوس */
+        /* --------------------------------------------------------- */
+
+        .dev-avatar:hover {
+            transform: scale(1.05);
+
+            box-shadow:
+                0 12px 25px rgba(2, 132, 199, 0.35);
+        }
+
+
+        /* تكبير الصورة نفسها عند تمرير الماوس */
+        .dev-avatar:hover img {
+            transform: scale(1.1);
+        }
+
+
+        /* --------------------------------------------------------- */
+        /* اسم المطور */
+        /* --------------------------------------------------------- */
+
+        .dev-intro h2 {
+            font-size: 1.8rem;
+            font-weight: 900;
+            margin-bottom: 4px;
+        }
+
+
+        /* تنسيق النص الموجود داخل span */
+        .dev-intro h2 span {
+            color: var(--primary-blue, #0284c7);
+            font-size: 1.4rem;
+        }
+
+
+        /* --------------------------------------------------------- */
+        /* وظيفة المطور */
+        /* --------------------------------------------------------- */
+
+        .dev-role {
+            color: var(--medical-teal, #0d9488);
+            font-weight: 700;
+            font-size: 1rem;
+            margin-bottom: 10px;
+        }
+
+
+        /* --------------------------------------------------------- */
+        /* الوصف التعريفي للمطور */
+        /* --------------------------------------------------------- */
+
+        .dev-bio {
+            color: var(--text-muted, #64748b);
+            line-height: 1.7;
+            font-size: 0.95rem;
+            margin-bottom: 15px;
+        }
+
+
+        /* --------------------------------------------------------- */
+        /* البادجات الخاصة بالمطور */
+        /* --------------------------------------------------------- */
+
+        .dev-badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+
+        /* شكل كل Badge */
+        .badge {
+            background: rgba(2, 132, 199, 0.1);
+            color: var(--primary-blue, #0284c7);
+
+            padding: 4px 12px;
+
+            border-radius: 20px;
+
+            font-size: 0.85rem;
+            font-weight: 700;
+        }
+
+
+        /* --------------------------------------------------------- */
+        /* حاوية أزرار التواصل الاجتماعي */
+        /* --------------------------------------------------------- */
+
+        .social-links-wrapper {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+
+        /* الشكل العام لأزرار التواصل */
+        .social-btn {
+            text-decoration: none;
+
+            padding: 8px 16px;
+
+            border-radius: 10px;
+
+            font-size: 0.85rem;
+            font-weight: 700;
+
+            color: white;
+
+            transition:
+                transform 0.2s ease,
+                opacity 0.2s ease;
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 6px;
+        }
+
+
+        /* حركة الزر عند تمرير الماوس */
+        .social-btn:hover {
+            transform: translateY(-2px);
+            opacity: 0.9;
+        }
+
+
+        /* لون زر التليجرام */
+        .telegram {
+            background-color: #0088cc;
+        }
+
+
+        /* لون حساب Zak Ware */
+        .insta-edu {
+            background: linear-gradient(
+                45deg,
+                #f09433,
+                #e6683c,
+                #dc2743,
+                #cc2366,
+                #bc1888
+            );
+        }
+
+
+        /* لون الحساب الشخصي */
+        .insta-personal {
+            background: #24292e;
+        }
+
+
+        /* --------------------------------------------------------- */
+        /* شبكة كروت المطور */
+        /* --------------------------------------------------------- */
+
+        .dev-grid {
+            display: grid;
+
+            /* إنشاء أعمدة متجاوبة */
+            grid-template-columns:
+                repeat(
+                    auto-fit,
+                    minmax(280px, 1fr)
+                );
+
+            gap: 20px;
+        }
+
+
+        /* شكل كارت المطور */
+        .dev-card {
+            background: var(--bg-card, #ffffff);
+
+            border: 1px solid var(
+                --border-color,
+                #e2e8f0
+            );
+
+            border-radius: 16px;
+
+            padding: 25px;
+
+            box-shadow: var(
+                --shadow-sm,
+                0 2px 5px rgba(0, 0, 0, 0.05)
+            );
+
+            transition:
+                transform 0.3s ease,
+                box-shadow 0.3s ease;
+        }
+
+
+        /* حركة الكارت عند تمرير الماوس */
+        .dev-card:hover {
+            transform: translateY(-5px);
+
+            box-shadow: var(
+                --shadow-md,
+                0 5px 15px rgba(0, 0, 0, 0.1)
+            );
+        }
+
+
+        /* أيقونة الكارت */
+        .card-icon {
+            font-size: 2.2rem;
+            margin-bottom: 12px;
+        }
+
+
+        /* عنوان الكارت */
+        .dev-card h3 {
+            font-size: 1.2rem;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+
+
+        /* النص داخل الكارت */
+        .dev-card p {
+            color: var(--text-muted, #64748b);
+
+            font-size: 0.9rem;
+
+            line-height: 1.6;
+        }
+
+
+        /* لون الحد العلوي للكارت الأول */
+        .card-teal {
+            border-top: 4px solid var(
+                --medical-teal,
+                #0d9488
+            );
+        }
+
+
+        /* لون الحد العلوي للكارت الثاني */
+        .card-blue {
+            border-top: 4px solid var(
+                --primary-blue,
+                #0284c7
+            );
+        }
+
+
+        /* لون الحد العلوي للكارت الثالث */
+        .card-purple {
+            border-top: 4px solid #a855f7;
+        }
+
+
+        /* --------------------------------------------------------- */
+        /* تنسيق الهاتف والشاشات الصغيرة */
+        /* --------------------------------------------------------- */
+
+        @media (max-width: 768px) {
+
+            /* تحويل كارت المطور إلى ترتيب عمودي */
+            .dev-header-card {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            /* جعل البادجات والأزرار في المنتصف */
+            .dev-badges,
+            .social-links-wrapper {
+                justify-content: center;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- ========================================================= -->
+    <!-- 1. شريط التنقل العلوي Navbar -->
+    <!-- ========================================================= -->
+
+    <!-- شريط التنقل الرئيسي -->
+    <nav class="navbar" aria-label="التنقل الرئيسي">
+
+        <!-- شعار الموقع -->
+        <a href="#" class="logo" id="nav-logo">
+            🔬 Zak <span>Lab</span>
+        </a>
+
+
+        <!-- قائمة الصفحات -->
+        <ul class="nav-links">
+
+            <!-- صفحة التيوبات -->
+            <li>
+                <a
+                    href="#"
+                    class="nav-item active"
+                    data-target="tubes-page"
+                >
+                    التيوبات
+                </a>
+            </li>
+
+
+            <!-- صفحة الأجهزة -->
+            <li>
+                <a
+                    href="#"
+                    class="nav-item"
+                    data-target="equipment-page"
+                >
+                    الأجهزة والأدوات
+                </a>
+            </li>
+
+
+            <!-- صفحة التحاليل -->
+            <li>
+                <a
+                    href="#"
+                    class="nav-item"
+                    data-target="tests-page"
+                >
+                    التحاليل
+                </a>
+            </li>
+
+
+            <!-- صفحة البول والبراز -->
+            <li>
+                <a
+                    href="#"
+                    class="nav-item"
+                    data-target="urine-stool-page"
+                    onclick="renderUrineStoolGroup()"
+                >
+                    اليورن والستول
+                </a>
+            </li>
+
+
+            <!-- صفحة المختبر العملي -->
+            <li>
+                <a
+                    href="#"
+                    class="nav-item"
+                    data-target="practical-lab-page"
+                >
+                    🧪 المختبر العملي
+                </a>
+            </li>
+
+
+            <!-- صفحة الأحياء الدقيقة -->
+            <li>
+                <a
+                    href="#"
+                    class="nav-item"
+                    data-target="microbiology-page"
+                    dir="ltr"
+                >
+                    Microbiology
+                </a>
+            </li>
+
+            <!-- صفحة تفسير التحاليل -->
+            <li>
+                <a
+                    href="#"
+                    class="nav-item"
+                    data-target="interpretation-page"
+                >
+                    تفسير التحاليل
+                </a>
+            </li>
+
+            <!-- صفحة الأحياء الجزيئية والوراثة -->
+            <li>
+                <a
+                    href="#"
+                    class="nav-item"
+                    data-target="molecular-genetics-page"
+                >
+                    الأحياء الجزيئية والوراثة
+                </a>
+            </li>
+
+
+            <!-- صفحة المطور -->
+            <li>
+                <a
+                    href="#"
+                    class="nav-item"
+                    data-target="dev-page"
+                >
+                    المطور
+                </a>
+            </li>
+
+            <!-- مؤشر زخرفي يتحرك بين روابط التنقل؛ لا يغير وجهات الروابط أو تسمياتها -->
+            <li class="nav-indicator" aria-hidden="true"></li>
+
+        </ul>
+
+
+        <!-- ===================================================== -->
+        <!-- زر الوضع الداكن / الفاتح -->
+        <!-- ===================================================== -->
+
+        <button
+            type="button"
+            class="theme-toggle-btn"
+            id="theme-toggle"
+            aria-label="تبديل الوضع الداكن والفاتح"
+        >
+
+            <!-- أيقونة الوضع -->
+            <span id="theme-icon">🌙</span>
+
+            <!-- اسم الوضع -->
+            <span id="theme-text">
+                الوضع الداكن
+            </span>
+
+        </button>
+
+    </nav>
+
+
+    <!-- ========================================================= -->
+    <!-- 2. محرك البحث -->
+    <!-- ========================================================= -->
+
+    <section
+        class="hero-search"
+        id="search-section"
+    >
+
+        <!-- عنوان البحث -->
+        <h2 id="search-title">
+            الدليل الطبي للمختبرات
+        </h2>
+
+
+        <!-- وصف البحث -->
+        <p id="search-subtitle">
+            ابحث عن اسم التحليل، نوع التيوب، أو الجهاز بسهولة
+        </p>
+
+
+        <!-- صندوق البحث -->
+        <div class="search-box" role="search">
+
+            <!-- حقل إدخال البحث -->
+            <input
+                type="text"
+                id="main-search-input"
+                placeholder="🔍 اكتب للبحث السريع..."
+                aria-label="البحث في معلومات المختبرات"
+                autocomplete="off"
+            >
+
+        </div>
+
+        <!-- نتائج محرك البحث: يملؤها new.js ببطاقات آمنة -->
+        <div id="global-search-results" aria-live="polite" hidden></div>
+
+    </section>
+
+
+    <!-- ========================================================= -->
+    <!-- 3. الحاوية الرئيسية لجميع الصفحات -->
+    <!-- ========================================================= -->
+
+    <div class="container">
+
+
+        <!-- ===================================================== -->
+        <!-- أ) صفحة تيوبات سحب الدم -->
+        <!-- ===================================================== -->
+
+        <div
+            class="page-section"
+            id="tubes-page"
+        >
+
+            <!-- عنوان الصفحة -->
+            <h2 class="section-title">
+                🧪 دليل تيوبات سحب الدم
+            </h2>
+
+
+            <!-- حاوية التيوبات -->
+            <div
+                class="grid-layout"
+                id="tubes-container"
+            >
+
+                <!-- كارت التيوب -->
+                <div class="card-tube">
+
+                    <!-- رأس الكارت -->
+                    <div class="tube-header">
+
+                        <!-- لون غطاء التيوب -->
+                        <div
+                            class="tube-cap"
+                            style="background: #a855f7;"
+                        ></div>
+
+
+                        <!-- اسم التيوب -->
+                        <div>
+
+                            <h3>
+                                EDTA Tube
+                            </h3>
+
+                            <small
+                                style="
+                                    color:
+                                    var(
+                                        --text-muted,
+                                        #64748b
+                                    );
+                                "
+                            >
+                                الغطاء البنفسجي
+                            </small>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- المادة الموجودة داخل التيوب -->
+                    <p>
+                        <strong>
+                            المادة المضافة:
+                        </strong>
+                        K2 EDTA / K3 EDTA
+                    </p>
+
+
+                    <!-- نوع العينة -->
+                    <p>
+                        <strong>
+                            نوع العينة:
+                        </strong>
+                        دم كامل (Whole Blood)
+                    </p>
+
+
+                    <!-- التحاليل التي يمكن استخدامها -->
+                    <div style="margin-top: 10px;">
+
+                        <span class="badge-item">
+                            CBC
+                        </span>
+
+                        <span class="badge-item">
+                            HbA1c
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ===================================================== -->
+        <!-- ب) صفحة الأجهزة -->
+        <!-- ===================================================== -->
+
+        <div
+            class="page-section"
+            id="equipment-page"
+            style="display: none;"
+        >
+
+            <!-- عنوان الصفحة -->
+            <h2 class="section-title">
+                🔬 الأجهزة والأدوات المختبرية
+            </h2>
+
+
+            <!-- تذكير الأسلوب: تبويبان بنفس منطق الأحياء الجزيئية والوراثة؛ يبقى equipment-container محفوظاً للأجهزة القائمة. -->
+            <section class="equipment-tools-shell" aria-label="محتوى الأجهزة والأدوات المختبرية">
+                <header class="equipment-tools-intro">
+                    <span class="equipment-tools-eyebrow">دليل تعليمي قابل للتوسعة</span>
+                    <h3>اختر نوع المحتوى</h3>
+                    <p>تعرف على الأجهزة والعدد المخبرية من خلال الوظيفة ومبدأ العمل وخطوات الاستخدام والتنبيهات، مع مسار صورة جاهز لكل عنصر.</p>
+                </header>
+
+                <div class="equipment-tools-tabs" role="tablist" aria-label="تبويبات الأجهزة والأدوات">
+                    <button type="button" class="equipment-tools-btn active" role="tab" aria-selected="true" data-equipment-tab="devices" onclick="switchEquipmentToolsTab('devices')">🔬 الأجهزة</button>
+                    <button type="button" class="equipment-tools-btn" role="tab" aria-selected="false" data-equipment-tab="tools" onclick="switchEquipmentToolsTab('tools')">🧰 الأدوات</button>
+                </div>
+
+                <!-- الحاوية الأصلية للأجهزة؛ لا يتغير معرفها حتى تبقى المراجع والبحث القائمة عاملة. -->
+                <div class="grid-layout equipment-tools-grid" id="equipment-container"></div>
+
+                <!-- حاوية الأدوات الجديدة؛ يمكن إضافة عناصر إلى labToolsData من دون تعديل البنية. -->
+                <div class="grid-layout equipment-tools-grid" id="lab-tools-container" hidden></div>
+            </section>
+
+        </div>
+
+
+        <!-- ===================================================== -->
+        <!-- ج) صفحة التحاليل -->
+        <!-- ===================================================== -->
+
+        <div
+            class="page-section"
+            id="tests-page"
+            style="display: none;"
+        >
+
+            <!-- عنوان صفحة التحاليل -->
+            <h2 class="section-title">
+                📋 دليل التحاليل الطبية
+            </h2>
+
+
+            <!-- ================================================= -->
+            <!-- أزرار مجموعات التحاليل -->
+            <!-- ================================================= -->
+
+            <div
+                class="groups-nav"
+                style="
+                    margin-bottom: 20px;
+                    display: flex;
+                    gap: 10px;
+                    flex-wrap: wrap;
+                "
+            >
+
+
+                <!-- أمراض الدم -->
+                <button
+                    onclick="
+                        typeof renderHematologyGroup === 'function'
+                        &&
+                        renderHematologyGroup()
+                    "
+                    class="group-btn"
+                    style="
+                        padding: 10px 18px;
+                        font-size: 0.95rem;
+                        cursor: pointer;
+                        background: #e11d48;
+                        color: white;
+                        border: none;
+                        border-radius: 8px;
+                        font-weight: bold;
+                    "
+                >
+                    🩸 أمراض الدم (Hematology)
+                </button>
+
+
+                <!-- الكيمياء السريرية -->
+                <button
+                    id="chem-btn"
+                    onclick="
+                        typeof renderClinicalChemistryGroup === 'function'
+                        &&
+                        renderClinicalChemistryGroup()
+                    "
+                    class="group-btn"
+                    style="
+                        padding: 10px 18px;
+                        font-size: 0.95rem;
+                        cursor: pointer;
+                        background: #0284c7;
+                        color: white;
+                        border: none;
+                        border-radius: 8px;
+                        font-weight: bold;
+                    "
+                >
+                    🧪 الكيمياء السريرية (Clinical Chemistry)
+                </button>
+
+
+                <!-- التجلط -->
+                <button
+                    id="coag-btn"
+                    onclick="
+                        typeof renderCoagulationGroup === 'function'
+                        &&
+                        renderCoagulationGroup()
+                    "
+                    class="group-btn"
+                    style="
+                        padding: 10px 18px;
+                        font-size: 0.95rem;
+                        cursor: pointer;
+                        background: #2563eb;
+                        color: white;
+                        border: none;
+                        border-radius: 8px;
+                        font-weight: bold;
+                    "
+                >
+                    🩸 التجلط وتخثر الدم (Coagulation)
+                </button>
+
+
+                <!-- المناعة والأمصال -->
+                <button
+                    id="immuno-btn"
+                    onclick="
+                        typeof renderImmunologyGroup === 'function'
+                        &&
+                        renderImmunologyGroup()
+                    "
+                    class="group-btn"
+                    style="
+                        padding: 10px 18px;
+                        font-size: 0.95rem;
+                        cursor: pointer;
+                        background: #7c3aed;
+                        color: white;
+                        border: none;
+                        border-radius: 8px;
+                        font-weight: bold;
+                    "
+                >
+                    🛡️ المناعة والأمصال (Immunology & Serology)
+                </button>
+
+
+                <!-- الهرمونات -->
+                <button
+                    id="hormone-btn"
+                    onclick="
+                        typeof renderHormonesGroup === 'function'
+                        &&
+                        renderHormonesGroup()
+                    "
+                    class="group-btn"
+                    style="
+                        padding: 10px 18px;
+                        font-size: 0.95rem;
+                        cursor: pointer;
+                        background: #059669;
+                        color: white;
+                        border: none;
+                        border-radius: 8px;
+                        font-weight: bold;
+                    "
+                >
+                    🧬 الهرمونات والغدد (Hormones)
+                </button>
+
+
+                <!-- بنك الدم -->
+                <button
+                    id="bloodbank-btn"
+                    onclick="
+                        typeof renderBloodBankGroup === 'function'
+                        &&
+                        renderBloodBankGroup()
+                    "
+                    class="group-btn"
+                    style="
+                        padding: 10px 18px;
+                        font-size: 0.95rem;
+                        cursor: pointer;
+                        background: #991b1b;
+                        color: white;
+                        border: none;
+                        border-radius: 8px;
+                        font-weight: bold;
+                    "
+                >
+                    🩸 بنك الدم (Blood Bank)
+                </button>
+
+
+                <!-- علم الفيروسات -->
+                <button
+                    id="virology-btn"
+                    onclick="
+                        typeof renderVirologyGroup === 'function'
+                        &&
+                        renderVirologyGroup()
+                    "
+                    class="group-btn"
+                    style="
+                        padding: 10px 18px;
+                        font-size: 0.95rem;
+                        cursor: pointer;
+                        background: #0d9488;
+                        color: white;
+                        border: none;
+                        border-radius: 8px;
+                        font-weight: bold;
+                    "
+                >
+                    🦠 علم الفيروسات (Virology)
+                </button>
+
+
+                <!-- الأحياء الجزيئية -->
+                <button
+                    id="molecular-btn"
+                    onclick="
+                        typeof renderMolecularGroup === 'function'
+                        &&
+                        renderMolecularGroup()
+                    "
+                    class="group-btn"
+                    style="
+                        padding: 10px 18px;
+                        font-size: 0.95rem;
+                        cursor: pointer;
+                        background: #047857;
+                        color: white;
+                        border: none;
+                        border-radius: 8px;
+                        font-weight: bold;
+                    "
+                >
+                    🧬 الأحياء الجزيئية (Molecular / PCR)
+                </button>
+
+            </div>
+
+
+            <!--
+                JavaScript سيضع كروت التحاليل داخل هذه الحاوية.
+            -->
+            <div id="tests-container"></div>
+
+        </div>
+
+
+        <!-- ===================================================== -->
+        <!-- د) صفحة البول والبراز -->
+        <!-- ===================================================== -->
+
+        <div
+            class="page-section"
+            id="urine-stool-page"
+            style="display: none;"
+        >
+
+            <!-- عنوان الصفحة -->
+            <h2 class="section-title">
+                🧫 فحوصات البول والبراز (Urine & Stool)
+            </h2>
+
+
+            <!--
+                JavaScript سيضيف فحوصات البول والبراز هنا.
+            -->
+            <div
+                class="grid-layout"
+                id="urine-stool-container"
+            ></div>
+
+        </div>
+
+
+        <!-- ===================================================== -->
+        <!-- هـ) صفحة Microbiology -->
+        <!-- ===================================================== -->
+
+        <div
+            id="microbiology-page"
+            class="page-section"
+            style="display: none;"
+        >
+
+            <!-- عنوان الصفحة -->
+            <h2 class="section-title">
+                🧫 علم الأحياء الدقيقة (Microbiology)
+            </h2>
+
+
+            <!--
+                الحاوية الأساسية الخاصة بقسم Microbiology.
+                JavaScript سيضيف المحتوى إليها.
+            -->
+            <div id="microbiology-container"></div>
+
+
+            <!-- خط فاصل -->
+            <hr
+                style="
+                    opacity: 0.2;
+                    margin: 30px 0;
+                "
+            >
+
+
+            <!-- ================================================= -->
+            <!-- زر فتح مكتبة البكتيريا -->
+            <!-- ================================================= -->
+
+            <div
+                style="
+                    text-align: center;
+                    margin: 20px 0;
+                "
+            >
+
+                <button
+                    id="btn-show-bacteria"
+                    onclick="toggleBacteriaLibrary()"
+                    style="
+                        background:
+                            linear-gradient(
+                                135deg,
+                                #6b21a8,
+                                #9333ea
+                            );
+                        color: white;
+                        border: none;
+                        padding: 12px 25px;
+                        font-size: 1rem;
+                        border-radius: 25px;
+                        cursor: pointer;
+                        box-shadow:
+                            0 4px 12px
+                            rgba(
+                                107,
+                                33,
+                                168,
+                                0.3
+                            );
+                        transition:
+                            all 0.3s ease;
+                    "
+                >
+                    🔬 تصفح مكتبة البكتيريا الطبية
+                    (Bacteria Library)
+                </button>
+
+            </div>
+
+
+            <!--
+                حاوية مكتبة البكتيريا.
+
+                display: none
+                تعني أن المكتبة مخفية في البداية.
+
+                JavaScript سيقوم بفتحها وإغلاقها.
+            -->
+            <div
+                id="bacteria-library-container"
+                style="
+                    display: none;
+                    margin-top: 20px;
+                "
+            ></div>
+
+        </div>
+
+
+        <!-- ===================================================== -->
+        <!-- و) صفحة تفسير التحاليل -->
+        <!-- ===================================================== -->
+
+        <div
+            class="page-section"
+            id="interpretation-page"
+            style="display: none;"
+        >
+            <h2 class="section-title">
+                📋 تفسير التحاليل
+            </h2>
+
+            <p class="section-intro">
+                دليل تعليمي لقراءة تقرير المختبر بطريقة منظمة. لا يعتمد للتشخيص أو لتغيير العلاج دون الرجوع إلى مختص.
+            </p>
+
+            <div
+                class="guide-grid"
+                id="interpretation-container"
+            ></div>
+        </div>
+
+
+        <!-- ===================================================== -->
+        <!-- ز) صفحة المختبر العملي -->
+        <!-- ===================================================== -->
+
+        <div
+            class="page-section practical-lab-page"
+            id="practical-lab-page"
+            style="display: none;"
+        >
+            <h2 class="section-title">
+                🧪 المختبر العملي
+            </h2>
+
+            <p class="section-intro">
+                تجارب تعليمية منظمة تربط المبدأ بالأداة والخطوات والملاحظة والتفسير والسلامة. للتعلم فقط وتُطبق الإجراءات الفعلية وفق SOP والتدريب المباشر.
+            </p>
+
+            <!-- يملؤه Practical Lab renderer المستقل في new.js من practicalLabData. -->
+            <div id="practical-lab-container" class="practical-lab" aria-live="polite"></div>
+        </div>
+
+
+        <!-- ===================================================== -->
+        <!-- ح) صفحة الأحياء الجزيئية والوراثة -->
+        <!-- ===================================================== -->
+
+        <div
+            class="page-section"
+            id="molecular-genetics-page"
+            style="display: none;"
+        >
+            <h2 class="section-title">
+                🧬 الأحياء الجزيئية والوراثة
+            </h2>
+
+            <p class="section-intro">
+                اختر المسار المطلوب لتتعلم المفاهيم خطوةً بخطوة: شرح مبسط، ملخص علمي، قواعد عمل وملاحظات موثقة للمراجعة والدراسة.
+            </p>
+
+            <div class="molecular-genetics-tabs" role="tablist" aria-label="أقسام الأحياء الجزيئية والوراثة">
+                <button
+                    type="button"
+                    class="group-btn molecular-genetics-btn active"
+                    id="molecular-biology-tab"
+                    onclick="renderMolecularBiologySection()"
+                >
+                    🧬 الأحياء الجزيئية
+                </button>
+
+                <button
+                    type="button"
+                    class="group-btn molecular-genetics-btn"
+                    id="genetics-tab"
+                    onclick="renderGeneticsSection()"
+                >
+                    🧬 الوراثة والجينات
+                </button>
+            </div>
+
+            <div id="molecular-genetics-container"></div>
+        </div>
+
+
+        <!-- ===================================================== -->
+        <!-- ح) صفحة المطور -->
+        <!-- ===================================================== -->
+
+        <div
+            class="page-section"
+            id="dev-page"
+            style="display: none;"
+        >
+
+            <!-- عنوان صفحة المطور -->
+            <h2 class="section-title">
+                👨‍💻 زكريا عمر عادل — Developer Information
+            </h2>
+
+
+            <!-- الحاوية الخاصة بمعلومات المطور -->
+            <div
+                class="dev-section"
+                id="developer-profile-container"
+                style="padding: 30px;"
+            >
+
+                <!-- اسم المطور -->
+                <h3>
+                    زكريا عمر عادل
+                </h3>
+
+
+                <!-- معلومات الدراسة -->
+                <p
+                    style="
+                        color:
+                            var(
+                                --text-muted,
+                                #64748b
+                            );
+                        margin-bottom: 20px;
+                    "
+                >
+                    طالب في الجامعة التقنية الشمالية -
+                    كلية التقنيات الصحية والطبية -
+                    قسم المختبرات الطبية
+                </p>
+
+
+                <!-- خط فاصل -->
+                <hr
+                    style="
+                        border: 0;
+                        border-top:
+                            1px solid
+                            var(
+                                --border-color,
+                                #e2e8f0
+                            );
+                        margin: 20px 0;
+                    "
+                >
+
+
+                <!-- الحاوية الرئيسية لبروفايل المطور -->
+                <div class="dev-profile-container">
+
+
+                    <!-- ================================================= -->
+                    <!-- الكارت الرئيسي للمطور -->
+                    <!-- ================================================= -->
+
+                    <div class="dev-header-card">
+
+
+                        <!-- صورة المطور -->
+                        <div class="dev-avatar">
+
+                            <img
+                                src="myphoto/me.jpeg"
+                                alt="زكريا عمر"
+                            >
+
+                        </div>
+
+
+                        <!-- معلومات المطور -->
+                        <div class="dev-intro">
+
+                            <!-- اسم المطور -->
+                            <h2>
+                                <span>
+                                    (Zakaria)
+                                </span>
+                            </h2>
+
+
+                            <!-- الوظيفة -->
+                            <p class="dev-role">
+                                مطور (Full-Stack Developer)
+                                |
+                                صانع محتوى تقني
+                            </p>
+
+
+                            <!-- نبذة عن المطور -->
+                            <p class="dev-bio">
+
+                                مؤسس منصة
+                                <strong>
+                                    Zak Ware
+                                </strong>
+                                التعليمية.
+
+                                شغوف بتحويل الأفكار إلى مواقع
+                                وتطبيقات عصرية تجمع بين الأداء العالي،
+                                سهولة الاستخدام، والتصميم الاحترافي.
+
+                            </p>
+
+
+                            <!-- ================================================= -->
+                            <!-- المهارات والباجات -->
+                            <!-- ================================================= -->
+
+                            <div class="dev-badges">
+
+                                <span class="badge">
+                                    Frontend
+                                </span>
+
+                                <span class="badge">
+                                    Backend
+                                </span>
+
+                                <span class="badge">
+                                    Zak Ware Founder
+                                </span>
+
+                                <span class="badge">
+                                    Technical Instructor
+                                </span>
+
+                            </div>
+
+
+                            <!-- ================================================= -->
+                            <!-- روابط التواصل -->
+                            <!-- ================================================= -->
+
+                            <div class="social-links-wrapper">
+
+
+                                <!-- حساب التليجرام -->
+                                <a
+                                    href="https://t.me/Zak_28"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    class="social-btn telegram"
+                                >
+                                    ✈️ قناة التليجرام
+                                </a>
+
+
+                                <!-- حساب Zak Ware -->
+                                <a
+                                    href="https://www.instagram.com/zak.ware?igsh=MWZncXcxOWVhdHA2OQ=="
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    class="social-btn insta-edu"
+                                >
+                                    📸 حساب Zak Ware
+                                </a>
+
+
+                                <!-- الحساب الشخصي -->
+                                <a
+                                    href="https://www.instagram.com/5t___q?igsh=M2xzazI3aXh3YnJn"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    class="social-btn insta-personal"
+                                >
+                                    👤 الحساب الشخصي
+                                </a>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- ================================================= -->
+                    <!-- كروت معلومات المطور -->
+                    <!-- ================================================= -->
+
+                    <div class="dev-grid">
+
+
+                        <!-- كارت منصة Zak Ware -->
+                        <div class="dev-card card-teal">
+
+                            <div class="card-icon">
+                                🎓
+                            </div>
+
+                            <h3>
+                                منصة Zak Ware التعليمية
+                            </h3>
+
+                            <p>
+                                تقديم شروحات ودورات متخصصة
+                                في عالم البرمجة، بهدف تبسيط
+                                المفاهيم الصعبة وتقديم محتوى عملي
+                                يساعد المبتدئين والطلاب على بناء
+                                أساس تقني قوي.
+                            </p>
+
+                        </div>
+
+
+                        <!-- كارت تطوير الويب -->
+                        <div class="dev-card card-blue">
+
+                            <div class="card-icon">
+                                💻
+                            </div>
+
+                            <h3>
+                                تطوير الويب الشامل
+                            </h3>
+
+                            <p>
+                                تصميم وبناء واجهات أمامية وخلفية
+                                (Full-Stack) حديثة وسريعة،
+                                مع الاهتمام بأعلى معايير الأداء
+                                وتجربة المستخدم (UI/UX).
+                            </p>
+
+                        </div>
+
+
+                        <!-- كارت الاستشارات والمشاريع -->
+                        <div class="dev-card card-purple">
+
+                            <div class="card-icon">
+                                🚀
+                            </div>
+
+                            <h3>
+                                الاستشارات والمشاريع
+                            </h3>
+
+                            <p>
+                                تقديم استشارات تقنية احترافية،
+                                ومساعدة الطلاب والمطورين في تنفيذ
+                                مشاريعهم التخرجية وتطوير حلول
+                                برمجية قابلة للتوسع.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ملاحظة تعليمية: المعلومات المعروضة مرجعية ولا تُستخدم وحدها للتشخيص أو لاتخاذ قرار علاجي. -->
+
+
+    <!-- ========================================================= -->
+    <!-- ربط ملفات JavaScript -->
+    <!-- ========================================================= -->
+
+
+    <!--
+        أولاً:
+        نربط ملف البيانات.
+
+        السبب:
+        الكود الرئيسي new.js قد يحتاج إلى البيانات الموجودة
+        داخل data.js، لذلك يجب تحميل data.js أولاً.
+    -->
+    <script src="data.js"></script>
+
+
+    <!--
+        ثانياً:
+        نربط ملف JavaScript الرئيسي.
+
+        هذا الملف مسؤول عن تشغيل وظائف الموقع والتعامل
+        مع العناصر الموجودة في HTML.
+    -->
+    <script src="new.js"></script>
+
+</body>
+
+</html>
