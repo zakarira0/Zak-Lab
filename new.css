@@ -5488,3 +5488,16 @@ html[dir="ltr"] .dev-header-card {
         transition: none;
     }
 }
+
+
+/* V29: استعادة ألوان قسم اليورن والستول في الوضع الداكن */
+[data-theme="dark"] #urine-stool-container div[style*="border: 1px solid #fef3c7"] { background: #fffbeb !important; border-color: #fde68a !important; }
+[data-theme="dark"] #urine-stool-container div[style*="border: 1px solid #fef3c7"] h2 { color: #b45309 !important; }
+[data-theme="dark"] #urine-stool-container div[style*="border: 1px solid #fef3c7"] h4 { color: #78350f !important; border-bottom-color: #fde68a !important; }
+[data-theme="dark"] #urine-stool-container table thead tr,
+[data-theme="dark"] #urine-stool-container table thead tr th { background: #fde68a !important; color: #78350f !important; border-color: #fef3c7 !important; }
+[data-theme="dark"] #urine-stool-container table td { border-color: #fde68a !important; color: #1f2937 !important; }
+[data-theme="dark"] #urine-stool-container table td[style*="#16a34a"] { color: #15803d !important; }
+[data-theme="dark"] #urine-stool-container table td[style*="#dc2626"] { color: #b91c1c !important; }
+[data-theme="dark"] #urine-stool-container .stool-card[style*="#fffbeb"] { background: #fffbeb !important; border-color: #fde68a !important; }
+[data-theme="dark"] #urine-stool-container .stool-card[style*="#fffbeb"] b { color: #78350f !important; }
